@@ -12,10 +12,11 @@ export default function Home() {
   const aboutRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: aboutRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end end"]
   });
   
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
 
   const projects = [
@@ -57,17 +58,17 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-background">
+    <main ref={aboutRef} className="bg-background h-[440vh]">
       {/* Hero Section */}
-      <section className="h-screen flex flex-col items-center justify-center relative">
-        <div className="absolute inset-0 z-0 bg-cover bg-no-repeat" style={{
+      <motion.section className="sticky top-0 min-h-screen flex flex-col items-center justify-center" style={{scale,y,opacity}}>
+        <motion.div className="absolute inset-0 z-0 bg-cover bg-no-repeat" style={{
         backgroundImage:`url(/images/background.png)`,
         opacity:0.7
       }}/>
       <div className="relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 80 }}
+          animate={{ opacity: 1, y: 50 }}
           transition={{ duration: 0.8 }}
           className="text-center"
         >
@@ -80,19 +81,13 @@ export default function Home() {
           transition={{ delay: 1, duration: 1 }}
           className="absolute bottom-10"
         >
-          <ChevronDown className="animate-bounce w-8 h-8" />
         </motion.div>
         </div>
-      </section>
+        <ChevronDown className="absolute animate-bounce w-8 h-8 bottom-10" />
+      </motion.section>
 
       {/* About Section */}
-      <section ref={aboutRef} className="min-h-screen py-20 px-4 md:px-20 relative overflow-hidden">
-        <motion.div 
-          style={{ y, opacity }}
-          className="absolute inset-0 z-0"
-        >
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" />
-        </motion.div>
+      <motion.section className="sticky top-100 min-h-screen py-20 px-4 md:px-20" style={{scale,y}}>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -133,10 +128,10 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* Projects Section */}
-      <section className="min-h-screen py-20 px-4 md:px-20 bg-muted/30">
+      <motion.section className="sticky top-200 min-h-screen py-20 px-4 md:px-20 bg-muted/30" style={{scale}}>
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-12">Projects</h2>
           <div className="flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory">
@@ -154,7 +149,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Contact Section */}
       <section className="min-h-screen py-20 px-4 md:px-20">

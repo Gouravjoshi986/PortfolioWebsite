@@ -16,7 +16,10 @@ export default function Home() {
   });
   
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+  const scaleDown = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+  const scaleUp = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const rotateA = useTransform(scrollYProgress, [0, 1], [0, -5]);
+  const rotateB = useTransform(scrollYProgress, [0, 0.5], [-5, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
 
   const projects = [
@@ -60,7 +63,7 @@ export default function Home() {
   return (
     <main ref={aboutRef} className="bg-background h-[440vh]">
       {/* Hero Section */}
-      <motion.section className="sticky top-0 min-h-screen flex flex-col items-center justify-center" style={{scale,y,opacity}}>
+      <motion.section className="sticky top-0 h-screen flex flex-col items-center justify-center" style={{scale : scaleDown,y,opacity,rotate:rotateA}}>
         <motion.div className="absolute inset-0 z-0 bg-cover bg-no-repeat" style={{
         backgroundImage:`url(/images/background.png)`,
         opacity:0.7
@@ -75,20 +78,20 @@ export default function Home() {
           <h1 className="text-6xl font-bold mb-4">Gourav Joshi</h1>
           <p className="text-2xl text-muted-foreground">Software Engineer</p>
         </motion.div>
+        </div>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
           className="absolute bottom-10"
         >
+        <ChevronDown className="animate-bounce w-8 h-8" />
         </motion.div>
-        </div>
-        <ChevronDown className="absolute animate-bounce w-8 h-8 bottom-10" />
       </motion.section>
 
       {/* About Section */}
-      <motion.section className="sticky top-100 min-h-screen py-20 px-4 md:px-20" style={{scale,y}}>
-
+      <motion.section className="sticky top-100 h-screen py-20 px-4 md:px-20" style={{scale:scaleUp,y,rotate:rotateB}}>
+      <motion.div className="absolute inset-0 z-0 bg-cover bg-no-repeat" style={{backgroundImage:`url(/images/bg-2.jpg)`,opacity:0.8}}/>
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -97,7 +100,7 @@ export default function Home() {
           className="max-w-4xl mx-auto relative z-10"
         >
           <h2 className="text-4xl font-bold mb-8">About Me</h2>
-          <div className="space-y-6 text-lg text-muted-foreground">
+          <div className="space-y-6 text-lg font-semibold">
             <p>
               Final Year Undergrad at NIT Bhopal with interest in Computer Science and Tech. I've worked with various technologies and frameworks, always staying up-to-date with the latest industry trends.
             </p>
@@ -131,9 +134,10 @@ export default function Home() {
       </motion.section>
 
       {/* Projects Section */}
-      <motion.section className="sticky top-200 min-h-screen py-20 px-4 md:px-20 bg-muted/30" style={{scale}}>
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12">Projects</h2>
+      <motion.section className="sticky top-200 min-h-screen py-20 px-4 md:px-20 bg-muted/30" style={{scale:scaleUp,rotate:rotateB}}>
+      <motion.div className="absolute inset-0 z-0 bg-cover bg-no-repeat" style={{backgroundImage:`url(/images/bg-3.jpg)`}}/>
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <h2 className="text-4xl text-white mb-12">Projects</h2>
           <div className="flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory">
             {projects.map((project, index) => (
               <motion.div

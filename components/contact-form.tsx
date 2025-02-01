@@ -48,10 +48,10 @@ export default function ContactForm() {
       };
 
       await emailjs.send(
-        "process.env.SERVICE_ID", 
-        'YOUR_TEMPLATE_ID', 
+        process.env.SERVICE_ID!, 
+        process.env.TEMPLATE_ID!, 
         templateParams,
-        'YOUR_PUBLIC_KEY' 
+        process.env.PUBLIC_KEY! 
       );
 
       toast.success("Message sent successfully!");

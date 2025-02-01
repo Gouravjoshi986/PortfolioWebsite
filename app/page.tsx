@@ -4,9 +4,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, Github, Linkedin, Mail, Code } from "lucide-react";
 import Link from "next/link";
 import ContactForm from "@/components/contact-form";
-import ProjectCard from "@/components/project-card";
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
+import HorizontalScrollCarousel from "@/components/horizontalScroll";
 
 export default function Home() {
   const aboutRef = useRef<HTMLDivElement>(null);
@@ -22,46 +22,8 @@ export default function Home() {
   const rotateB = useTransform(scrollYProgress, [0, 0.5], [-5, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
 
-  const projects = [
-    {
-      "title": "Code-Debugging AI Agent",
-      "description": "An advanced AI-powered debugging agent built with Next.js, LangChain, RAG, PostgreSQL, and Docker. It assists developers in identifying and fixing code issues efficiently.",
-      "image": "/images/codedebugagent.png",
-      "link": "https://github.com/Gouravjoshi986/Code-Debugging-AI-Agent",
-      "tags": ["Next.js", "LangChain", "Pinecone", "PostgreSQL", "Docker"]
-    },
-    {
-      "title": "Yoom Video Conferencing App",
-      "description": "A seamless video conferencing platform built using Next.js, TypeScript, and Clerk for authentication. It leverages Stream API for real-time communication.",
-      "image": "/images/yoom.png",
-      "link": "https://github.com/Gouravjoshi986/Video-conferencing-WebApp",
-      "tags": ["Next.js", "TypeScript", "Clerk", "Stream API"]
-    },
-    {
-      "title": "Stock Prediction Model using LSTM",
-      "description": "A machine learning model designed to predict stock prices using Long Short-Term Memory (LSTM) networks. Built with Python, TensorFlow, and Google Colab.",
-      "image": "/images/lstmmodel.png",
-      "link": "https://github.com/Gouravjoshi986/Stock-Prediction-Model-using-LSTM",
-      "tags": ["Python", "TensorFlow", "LSTM", "Google Colab", "Steam-lit"]
-    },
-    {
-      "title": "AI Blog WebApp",
-      "description": "A modern AI-powered blogging platform built with Next.js and Typescript. Allows for editing using TipTap and summary generation,content writing by ai with a given context.",
-      "image": "/images/ailog.png",
-      "link": "https://github.com/Gouravjoshi986/Ai-Blog-WebApp",
-      "tags": ["Next.js", "Typescript", "TipTap", "OpenAI"]
-    },
-    {
-      "title": "Multiple Disease Prediction Model",
-      "description": "A healthcare web application that predicts diseases like diabetes, heart disease, and Parkinson's using machine learning. Built with Python, Streamlit, and Scikit-learn.",
-      "image": "/images/diseasemodel.png",
-      "link": "https://github.com/Gouravjoshi986/Multiple_Disease_Prediction_Model",
-      "tags": ["Python", "Streamlit", "Scikit-learn", "SVM"]
-    }
-  ];
-
   return (
-    <main ref={aboutRef} className="bg-background h-[440vh]">
+    <main ref={aboutRef} className="bg-background h-[447vh]">
       {/* Hero Section */}
       <motion.section className="sticky top-0 h-screen flex flex-col items-center justify-center" style={{scale : scaleDown,y,opacity,rotate:rotateA}}>
         <motion.div className="absolute inset-0 z-0 bg-cover bg-no-repeat" style={{
@@ -138,20 +100,7 @@ export default function Home() {
       <motion.div className="absolute inset-0 z-0 bg-cover bg-no-repeat" style={{backgroundImage:`url(/images/bg-3.jpg)`}}/>
         <div className="relative z-10 max-w-7xl mx-auto">
           <h2 className="text-4xl text-white mb-12">Projects</h2>
-          <div className="flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="snap-center"
-              >
-                <ProjectCard {...project} />
-              </motion.div>
-            ))}
-          </div>
+            <HorizontalScrollCarousel/>
         </div>
       </motion.section>
 

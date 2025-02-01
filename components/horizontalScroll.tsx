@@ -46,12 +46,12 @@ const HorizontalScrollCarousel = () => {
     },
   ];
 
-  const targetRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 0.3], ["0%", "-28%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-35%"]);
 
   const containerVariants = {
     hidden: {},
@@ -63,8 +63,8 @@ const HorizontalScrollCarousel = () => {
   };
 
   return (
-    <section ref={targetRef} className="relative h-[107vh]">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+    <section ref={targetRef} className="sticky top-0 carousel h-[107vh]">
+      <div className="flex h-screen items-center overflow-hidden">
         <motion.div
           style={{ x }}
           className="flex gap-4"

@@ -44,7 +44,7 @@ export default function ContactForm() {
         from_email: values.email,
         message: values.message,
         to_name: "Gourav Joshi", 
-        reply_to: values.email,
+        reply_to: "gourav.joshi2003@gmail.com",
       };
 
       await emailjs.send(

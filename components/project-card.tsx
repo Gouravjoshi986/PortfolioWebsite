@@ -24,11 +24,11 @@ export default function ProjectCard({
   return (
     <Link href={link} target="_blank">
       <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.97 }}
         className="h-full"
       >
-        <Card className="w-[300px] h-full">
+        <Card className="w-[25vw] h-full">
           <CardContent className="p-0">
             <div className="relative h-[200px] w-full">
               <Image

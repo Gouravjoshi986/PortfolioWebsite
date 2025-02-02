@@ -33,7 +33,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main ref={aboutRef} className="bg-background h-[447vh]">
+    <main ref={aboutRef} className={`bg-background ${isMobile ? "h-[443vh]" : "h-[447vh]" }`}>
       {/* Hero Section */}
       <motion.section
         className="sticky top-0 h-screen flex flex-col items-center justify-center"

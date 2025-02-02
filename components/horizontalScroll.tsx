@@ -69,7 +69,7 @@ const HorizontalScrollCarousel = () => {
     <section
       ref={targetRef}
       className={`${
-        isMobile ? "relative h-[103vh]" : "sticky top-0 h-[107vh]"
+        isMobile ? "relative h-[100vh]" : "sticky top-0 h-[107vh]"
       }`}
     >
       <div className="flex h-screen items-center overflow-hidden">

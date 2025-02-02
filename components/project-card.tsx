@@ -29,9 +29,9 @@ export default function ProjectCard({
       <motion.div
         whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.97 }}
-        className={`${isMobile ? "snap-center" : ""} h-full`}
+        className={`${isMobile ? "snap-center" : ""} h-[100%]`}
       >
-        <Card className={`h-full ${isMobile ? "w-[100vw]" : "w-[25vw]"}`}>
+        <Card className={`h-[100%] ${isMobile ? "w-[100vw]" : "w-[25vw]"}`}>
           <CardContent className="p-0">
             <div className="relative h-[200px] w-full">
               <Image

@@ -6,7 +6,7 @@ import { ChevronDown, Github, Linkedin, Mail, Code } from "lucide-react";
 import Link from "next/link";
 import ContactForm from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import HorizontalScrollCarousel from "@/components/horizontalScroll";
 
 export default function Home() {
@@ -23,12 +23,21 @@ export default function Home() {
   const rotateB = useTransform(scrollYProgress, [0, 0.5], [-5, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.5, 0]);
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    // Listen to window resize events to update mobile status.
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <main ref={aboutRef} className="bg-background h-[447vh]">
       {/* Hero Section */}
       <motion.section
         className="sticky top-0 h-screen flex flex-col items-center justify-center"
-        style={{ scale: scaleDown, y, opacity, rotate: rotateA }}
+        style={isMobile ? {} : { scale: scaleDown, y, opacity, rotate: rotateA }}
       >
         <motion.div
           className="absolute inset-0 z-0 bg-cover bg-no-repeat"
@@ -61,7 +70,7 @@ export default function Home() {
       {/* About Section */}
       <motion.section
         className="sticky top-100 h-screen py-20 px-4 md:px-20"
-        style={{ scale: scaleUp, y, rotate: rotateB }}
+        style={isMobile ? {} : { scale: scaleUp, y, rotate: rotateB }}
       >
         <motion.div
           className="absolute inset-0 z-0 bg-cover bg-no-repeat"
@@ -111,10 +120,9 @@ export default function Home() {
       </motion.section>
 
       {/* Projects Section */}
-      {/* Increase the section's height so the pinned container can map vertical scroll to horizontal movement */}
       <motion.section
         className="sticky top-200 min-h-screen py-20 px-4 md:px-20 bg-muted/30"
-        style={{ scale: scaleUp, rotate: rotateB, height: "150vh" }}
+        style={isMobile ? {} : { scale: scaleUp, rotate: rotateB, height: "150vh" }}
       >
         <motion.div
           className="absolute inset-0 z-0 bg-cover bg-no-repeat"

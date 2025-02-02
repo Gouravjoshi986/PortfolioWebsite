@@ -1,3 +1,4 @@
+// components/project-card.tsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -12,6 +13,7 @@ interface ProjectCardProps {
   image: string;
   link: string;
   tags: string[];
+  isMobile?: boolean;
 }
 
 export default function ProjectCard({
@@ -20,15 +22,16 @@ export default function ProjectCard({
   image,
   link,
   tags,
+  isMobile = false,
 }: ProjectCardProps) {
   return (
     <Link href={link} target="_blank">
       <motion.div
         whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.97 }}
-        className="h-full"
+        className={`${isMobile ? "snap-center" : ""} h-full`}
       >
-        <Card className="w-[25vw] h-full">
+        <Card className={`h-full ${isMobile ? "w-[100vw]" : "w-[25vw]"}`}>
           <CardContent className="p-0">
             <div className="relative h-[200px] w-full">
               <Image

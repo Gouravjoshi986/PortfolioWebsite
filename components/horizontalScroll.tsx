@@ -1,5 +1,6 @@
+// components/horizontalScroll.tsx
 import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import ProjectCard from "./project-card";
 
 const HorizontalScrollCarousel = () => {
@@ -31,7 +32,7 @@ const HorizontalScrollCarousel = () => {
     {
       title: "AI Blog WebApp",
       description:
-        "A modern AI-powered blogging platform built with Next.js and Typescript. Allows for editing using TipTap and summary generation, content writing by ai with a given context.",
+        "A modern AI-powered blogging platform built with Next.js and Typescript. Allows for editing using TipTap and summary generation, content writing by AI with a given context.",
       image: "/images/ailog.png",
       link: "https://github.com/Gouravjoshi986/Ai-Blog-WebApp",
       tags: ["Next.js", "Typescript", "TipTap", "OpenAI"],
@@ -46,35 +47,46 @@ const HorizontalScrollCarousel = () => {
     },
   ];
 
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
+  // Ref for the section that triggers the scroll animation.
+  const targetRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
+  // Desktop: tie horizontal translation to vertical scroll.
+  const { scrollYProgress } = useScroll({ target: targetRef });
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-35%"]);
 
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.3,
-      },
-    },
-  };
+  // We'll determine mobile mode using a state value.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    // Listen to window resize events to update mobile status.
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <section ref={targetRef} className="sticky top-0 carousel h-[107vh]">
+    <section
+      ref={targetRef}
+      className={`${
+        isMobile ? "relative" : "sticky top-0"
+      } h-[107vh]`}
+    >
       <div className="flex h-screen items-center overflow-hidden">
         <motion.div
-          style={{ x }}
-          className="flex gap-4"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+          ref={carouselRef}
+          className={`flex gap-4 ${
+            isMobile
+              ? "overflow-x-scroll snap-x snap-mandatory scroll-smooth"
+              : ""
+          }`}
+          style={isMobile ? {} : { x }}
+          drag={false}
         >
           {projects.map((project, index) => (
-            <ProjectCard key={index} {...project} />
+            <ProjectCard key={index} {...project} isMobile={isMobile} />
           ))}
+          
         </motion.div>
       </div>
     </section>
